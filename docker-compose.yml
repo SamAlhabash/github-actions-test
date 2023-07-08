@@ -1,0 +1,37 @@
+version: '2.3'
+services:
+  worker-1:
+    image: myoung34/github-runner:latest
+    environment:
+      RUNNER_NAME: worker-1
+      RUNNER_TOKEN: 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
+      RUNNER_SCOPE: 'org'
+      ORG_NAME: MicrolabIoT
+    security_opt:
+      # needed on SELinux systems to allow docker container to manage other docker containers
+      - label:disable
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    container_name: github-worker-1
+    command: >
+      sh -c "./config.sh --url https://github.com/MicrolabIoT --token AOXQXMRNDK3T4LZRWJHXJDLEVFTQA &&
+        ./run.sh"
+    detach: true
+  worker-2:
+    image: myoung34/github-runner:latest
+    environment:
+      RUNNER_NAME: worker-2
+      RUNNER_TOKEN: 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
+      RUNNER_SCOPE: 'org'
+      ORG_NAME: MicrolabIoT
+    security_opt:
+      # needed on SELinux systems to allow docker container to manage other docker containers
+      - label:disable
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    container_name: github-worker-2
+    command: >
+      sh -c "./config.sh --url https://github.com/MicrolabIoT --token AOXQXMRNDK3T4LZRWJHXJDLEVFTQA &&
+        ./run.sh"
+    detach: true
+
